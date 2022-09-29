@@ -1,4 +1,21 @@
+import { useEffect, useState } from "react";
+
 function Lunch() {
+   const [getterlist,setList] =useState([])
+ 
+  useEffect(()=>{
+   
+    fetch("https://catgo-bf777-default-rtdb.firebaseio.com/employees.json").then(a=>{
+      return a.json()
+    }).then(a=>{
+      let array = [];
+      for(var item in a){
+        array.push(a[item]);
+      }
+      setList(array);
+      console.log(getterlist);
+    })
+  },[])
     return(
 <div>
 <table className="table table-dark table-hover">
@@ -18,36 +35,17 @@ function Lunch() {
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">3036</th>
-      <td>السيد على سعد السيد</td>
-      <td>مينا البصل</td>
-      <td></td>
-      <td>175</td>
-      <td>50%</td>
-      <td></td>
-
-
-    </tr>
-    <tr>
-      <th scope="row">3056</th>
-      <td>زينب كمال محمود ابراهيم</td>
-      <td>المركز الرئيسى</td>
-      <td></td>
-      <td>175</td>
-      <td>25%</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">3058</th>
-      <td>سونيا عبد المنعم اليمنى مزيد</td>
-      <td>المركز الرئيسى</td>
-      <td></td>
-      <td>175</td>
-      <td>75%</td>
-      <td></td>
-    </tr>
-
+    {getterlist.map(a=>(
+      <tr>
+        <td>{a.icl}</td>
+        <td>{a.name} </td>
+        <td>{a.managment} </td>
+        <td>{a.job} </td>
+        <td>{a.salary} </td>
+        <td>{a.rate} </td>
+        <td>{a.salary + (a.salary * (a.rate/100))}</td>
+      </tr>
+    ))}
   </tbody>
 </table>
 
